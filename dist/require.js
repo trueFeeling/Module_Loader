@@ -606,7 +606,9 @@ function Watcher(task, uris, dep, Module) {
 Watcher.prototype = {
     update: function update() {
         this.$len--;
-        this.run();
+        if (this.$len <= 0) {
+            this.run();
+        }
     },
 
     run: function run() {
@@ -614,20 +616,19 @@ Watcher.prototype = {
 
         var mod = this.$Module.module,
             task = this.$task;
-        if (this.$len <= 0) {
-            this.$uris.forEach(function (uri) {
-                _this.modArr.push(mod[uri].obj);
-            });
-            //this.$Module.module[this.dep.depName].obj =
-            if (typeof task == 'function') {
-                task.apply(null, this.modArr);
-                return;
-            }
-            var src = task.currentSrc;
-            mod[src].obj = task.callback.apply(null, this.modArr);
-            mod[src].dep.notify();
-            this.dep.removeSub(this);
+
+        this.$uris.forEach(function (uri) {
+            _this.modArr.push(mod[uri].obj);
+        });
+        //this.$Module.module[this.dep.depName].obj =
+        if (typeof task == 'function') {
+            task.apply(null, this.modArr);
+            return;
         }
+        var src = task.currentSrc;
+        mod[src].obj = task.callback.apply(null, this.modArr);
+        mod[src].dep.notify();
+        this.dep.removeSub(this);
         return;
     }
 };
