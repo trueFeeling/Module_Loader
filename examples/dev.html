@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>require||define||development</title>
+</head>
+<body>
+    <script src="./lib/js/require.js"></script>    
+    <script>
+        requirejs.config = {
+            baseUrl: './lib/js/',
+            path: {
+                test: '../test.js'
+            }
+        }
+        require(['test'],function(a){
+            console.log('result: ',a)
+        })
+        require(['a.js'],function(a){
+            console.log('result2: ',a)
+        })
+        require(['/test.js'],function(a){
+            console.log('result3: ',a)
+        })
+    </script>
+</body>
+</html>
