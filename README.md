@@ -1,5 +1,6 @@
 # Module_Loader
 模块加载器
+-[Docs](https://github.com/trueFeeling/Module_Loader/wiki)
 ## usage
 生产模式(未压缩)
 ```bash
